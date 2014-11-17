@@ -20,7 +20,7 @@ function Server(named, serverConfig) {
 	}
 
 	if (!!serverConfig.whiteListHeader) {
-		id (Array.isArray(serverConfig.whiteListHeader)) {
+		if (Array.isArray(serverConfig.whiteListHeader)) {
 			serverConfig.whiteListHeader.forEach(function(value) {
 				this.whiteListHeader.push(value.toLowerCase());
 			}, this);
