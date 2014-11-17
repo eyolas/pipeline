@@ -7,6 +7,7 @@ function Server(named, serverConfig) {
 	this.ignoreArgsForCache = [];
 	this.auth = null;
 	this.headers = null;
+	this.whiteListHeader = [];
 
 	if (!!serverConfig.ignoreArgsForCache) {
 		if (Array.isArray(serverConfig.ignoreArgsForCache)) {
@@ -15,6 +16,16 @@ function Server(named, serverConfig) {
 			}, this);
 		} else {
 			this.ignoreArgsForCache.push(serverConfig.ignoreArgsForCache.toLowerCase());
+		}
+	}
+
+	if (!!serverConfig.whiteListHeader) {
+		id (Array.isArray(serverConfig.whiteListHeader)) {
+			serverConfig.whiteListHeader.forEach(function(value) {
+				this.whiteListHeader.push(value.toLowerCase());
+			}, this);
+		} else {
+			this.whiteListHeader.push(serverConfig.whiteListHeader.toLowerCase());
 		}
 	}
 

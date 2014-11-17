@@ -113,7 +113,8 @@ function getCacheKey(pathRequest, query, req) {
 	var server = req.server,
 		purgedQuery = objectUtils.clone(query),
 		ignoreArgsForCache = server.ignoreArgsForCache,
-		opts = getOpts(req);
+		whiteListHeader = server.whiteListHeader;
+		opts = objectUtils.clone(getOpts(req));
 
 	if (ignoreArgsForCache && 0 !== ignoreArgsForCache.length) {
 		for (var k in purgedQuery) {
@@ -122,6 +123,17 @@ function getCacheKey(pathRequest, query, req) {
 				delete purgedQuery[k];
 			}
 		}
+	}
+
+	if (Array.isArray(whiteListHeader) && opts.headers) {
+		for (var k in opts.headers) {
+			var key = k.toLowerCase();
+			if (!_.contains(whiteListHeader, key)) {
+				delete opts.headers[k];
+			}
+		}
+	} else {
+		opts.headers = null;
 	}
 	
 	var purgedQuery = objectUtils.orderObjectByKey(purgedQuery);
